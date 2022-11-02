@@ -14,6 +14,7 @@ import org.checkerframework.checker.units.qual.K;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
             product.setProductBrand(String.valueOf(jsonObject.get("Product Brand")));
             product.setProductEan(String.valueOf(jsonObject.get("Product EAN")));
             product.setTsvyat(String.valueOf(jsonObject.get("Tsvyat")));
-            if(String.valueOf(jsonObject.get("Price"))!=null){
+            if (String.valueOf(jsonObject.get("Price")) != null) {
                 product.setPrice(Double.parseDouble(String.valueOf(jsonObject.get("Price"))));
             }
             product.setStock(Integer.parseInt(String.valueOf(jsonObject.get("Stock"))));
@@ -75,23 +76,7 @@ public class ProductServiceImpl implements ProductService {
             product.setImageFeatured(String.valueOf(jsonObject.get("Image Featured")));
             product.setImageTitle(String.valueOf(jsonObject.get("Image Title")));
             product.setWeight(String.valueOf(jsonObject.get("Weight")));
-//            String[] tokens = product.getProductCategories().split("\\|");
-//            for (int i = 0; i < tokens.length; i++) {
-//                if (tokens[i].contains(">")) {
-//                    String[] categories = tokens[i].split(">");
-//                    if (product.getParentCategory() == null) {
-//                        product.setParentCategory(categories[0]);
-//                    } else if (product.getParentCategory() != null) {
-//                        product.setSecondParentcategory(categories[0]);
-//                    }
-//
-//                    if (product.getChildCategory() == null) {
-//                        product.setChildCategory(categories[1]);
-//                    } else if (product.getChildCategory() != null) {
-//                        product.setSecondChildCategory(categories[1]);
-//                    }
-//                }
-//            }
+
             productRepository.save(product);
             if (product.getProductCategories().contains("Детски играчки")) {
                 List<DetskiIgrachki> detskiIgrachkiList = detskiIgrachkiRepository.findAll();
@@ -134,4 +119,49 @@ public class ProductServiceImpl implements ProductService {
 
         return "ok";
     }
+
+    public List<Product> getProductsByCategoryStandard(String category) {
+        if (category.equals("DetskiIgrachki")) {
+            List<Product> products = new ArrayList<>();
+            detskiIgrachkiRepository.findAll().forEach(a -> products.add(a.getProducts()));
+            return products;
+        }
+        if(category.equals("DomIGradina")){
+            List<Product> products = new ArrayList<>();
+            domIGradinaRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("KlimatizaciyaIVentilaciya")){
+            List<Product> products = new ArrayList<>();
+            klimatizaciyaIVentilaciyaRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("KompiutriIElektronika")){
+            List<Product> products = new ArrayList<>();
+            kompiutriIElektronikaRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("KuhnqIGastronomiya")){
+            List<Product> products = new ArrayList<>();
+            kuhnqIGastronomiyaRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("SportISvobodnoVreme")){
+            List<Product> products = new ArrayList<>();
+            sportISvobodnoVremeRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("VidyanoPoTv")){
+            List<Product> products = new ArrayList<>();
+            vidyanoPoTvRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        if(category.equals("ZdraveIKrasota")){
+            List<Product> products = new ArrayList<>();
+            zdraveIKrasotaRepository.findAll().forEach(a -> products.add(a.getProduct()));
+            return products;
+        }
+        return new ArrayList<>();
+    }
+
 }
