@@ -41,7 +41,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/websocket", "/websocket/**",
                         "/img/**",
                         "/static/**",
-                        "/api/daily/data/**").permitAll()
+                        "/api/daily/data/**",
+                        "/api/v1/products/**").permitAll()
                 .antMatchers("/auth/**", "/oauth2/**", "/**/*swagger*/**", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -21,13 +21,13 @@ public class OrderItem {
     private Long id;
 
     @Column(name = "amount")
-    private Long amount;
+    private Double amount;
 
     @Column(name = "quantity")
     private Long quantity;
 
     @OneToOne
-    private Perfume perfume;
+    private Product product;
 
     @Override
     public boolean equals(Object o) {

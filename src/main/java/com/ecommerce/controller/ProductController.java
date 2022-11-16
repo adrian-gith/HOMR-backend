@@ -1,6 +1,8 @@
 package com.ecommerce.controller;
 
+import com.amazonaws.services.servicecatalog.model.SearchProductsRequest;
 import com.ecommerce.dto.products.ProductsByCategoryRequest;
+import com.ecommerce.dto.products.SearchProductsKeywordsRequest;
 import com.ecommerce.model.Product;
 import com.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAuthority('USER')")
+//@PreAuthorize("hasAuthority('USER')")
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
@@ -25,8 +27,12 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/getByCategory")
-    public ResponseEntity<List<Product>> getProductsByCategory(@RequestBody ProductsByCategoryRequest productsByCategoryRequest){
-        return ResponseEntity.ok(productService.getProductsByCategoryStandard(productsByCategoryRequest.getCategory()));
+//    @PostMapping("/getByCategory")
+//    public ResponseEntity<List<Product>> getProductsByCategory(@RequestBody ProductsByCategoryRequest productsByCategoryRequest){
+//        return ResponseEntity.ok(productService.getProductsByCategoryStandard(productsByCategoryRequest.getCategory()));
+//    }
+    @PostMapping
+    public ResponseEntity<List<Product>> searchProductsByKeywords(@RequestBody SearchProductsKeywordsRequest searchProductsRequest){
+        return ResponseEntity.ok(productService.searchProductsByKeywords(searchProductsRequest.getKeywords()));
     }
 }
